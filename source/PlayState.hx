@@ -385,6 +385,9 @@ class PlayState extends MusicBeatState
 	var finaleBarRed:FlxSprite;
 	var finaleBarBlue:FlxSprite;
 
+	//jermasorry
+	var scaryJerma:FlxSprite;
+
 
 	// nick
 	var nickt:FlxSprite;
@@ -3274,6 +3277,15 @@ class PlayState extends MusicBeatState
 				add(defeatDKoverlay);
 
 				add(cargoDarkFG);
+
+			case 'jerma': // fuck you neato
+				scaryJerma = new FlxSprite(300, 150);
+				scaryJerma.frames = Paths.getSparrowAtlas('jermaSCARY');
+				scaryJerma.animation.addByPrefix('w', 'sussyjerma', 24, false);
+				scaryJerma.setGraphicSize(Std.int(scaryJerma.width * 1.6));
+				scaryJerma.scrollFactor.set();
+				scaryJerma.alpha = 0.001;
+				add(scaryJerma);
 
 			case 'warehouse':
 				add(torglasses);
@@ -7859,6 +7871,16 @@ class PlayState extends MusicBeatState
 							bg_jor.alpha = 0;
 						}
 
+				case 'Jerma Scream':
+					scaryJerma.animation.play('w');
+					scaryJerma.alpha = 1;
+
+				case 'Jerma Screamed':
+					scaryJerma.alpha = 0;
+					FlxG.camera.zoom += 0.9;
+					camHUD.zoom += 0.9;
+		
+
 				case 'Dave AUGH':
 					var targetsArray:Array<FlxCamera> = [camGame, camHUD];
 					for (i in 0...targetsArray.length)
@@ -9249,7 +9271,7 @@ class PlayState extends MusicBeatState
 						bfGhostTween.cancel();
 					ghost.color = FlxColor.fromRGB(boyfriend.healthColorArray[0] + 50, boyfriend.healthColorArray[1] + 50, boyfriend.healthColorArray[2] + 50);
 					bfGhostTween = FlxTween.tween(bfGhost, {alpha: 0, x: moveDirections[0], y: moveDirections[1]}, bpmTime, {
-						ease: FlxEase.quadIn,
+						ease: FlxEase.quadInOut,
 						onComplete: function(twn:FlxTween)
 						{
 							bfGhostTween = null;
@@ -9261,7 +9283,7 @@ class PlayState extends MusicBeatState
 						dadGhostTween.cancel();
 					ghost.color = FlxColor.fromRGB(dad.healthColorArray[0] + 50, dad.healthColorArray[1] + 50, dad.healthColorArray[2] + 50);
 					dadGhostTween = FlxTween.tween(dadGhost, {alpha: 0, x: moveDirections[0], y: moveDirections[1]}, bpmTime, {
-						ease: FlxEase.quadIn,
+						ease: FlxEase.quadInOut,
 						onComplete: function(twn:FlxTween)
 						{
 							dadGhostTween = null;
@@ -9272,7 +9294,7 @@ class PlayState extends MusicBeatState
 						momGhostTween.cancel();
 					ghost.color = FlxColor.fromRGB(mom.healthColorArray[0] + 50, mom.healthColorArray[1] + 50, mom.healthColorArray[2] + 50);
 					momGhostTween = FlxTween.tween(momGhost, {alpha: 0, x: moveDirections[0], y: moveDirections[1]}, bpmTime, {
-						ease: FlxEase.quadIn,
+						ease: FlxEase.quadInOut,
 						onComplete: function(twn:FlxTween)
 						{
 							momGhostTween = null;
